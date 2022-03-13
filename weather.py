@@ -8,7 +8,7 @@ import requests
 import streamlit as st
 from datetime import datetime
 
-OPENWEATHER_API_KEY = '3506e11b30813c5348ea977b1fb394a8'
+OPENWEATHER_KEY = st.secrets['openweather_key']
 
 BASE_API_CALL_URL = 'https://api.openweathermap.org/data/2.5/onecall?'
 
@@ -22,7 +22,7 @@ COUNTRIES = {'GB': ['London', 'Manchester'], 'FR': ['Paris'], 'ES': ['Madrid']}
 
 def get_geo_coordinates(city_name, country_code):
     # try without limit param 1st
-     geo_api_call_url = BASE_GEO_API_CALL_URL + f'q={city_name},{country_code}&appid={OPENWEATHER_API_KEY}'
+     geo_api_call_url = BASE_GEO_API_CALL_URL + f'q={city_name},{country_code}&appid={OPENWEATHER_KEY}'
      r = requests.get(geo_api_call_url)
      r_json = r.json()
      return r_json[0]['lat'], r_json[0]['lon']
@@ -32,7 +32,7 @@ def get_geo_coordinates(city_name, country_code):
 def open_weather_api_call(lat, lon, lang='en', units='metric'):
     # lat = CITIES[city]['lat']
     # lon = CITIES[city]['lon']
-    return BASE_API_CALL_URL + f'lat={lat}&lon={lon}&units={units}&lang={lang}&appid={OPENWEATHER_API_KEY}'
+    return BASE_API_CALL_URL + f'lat={lat}&lon={lon}&units={units}&lang={lang}&appid={OPENWEATHER_KEY}'
 
 
 def get_current_weather_metrics(call_json):
