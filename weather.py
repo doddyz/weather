@@ -72,9 +72,9 @@ def get_daily_weather_forecast_data_for_day_n(call_json, n):
         'wind_speed':
         forecast_weather_data_day_n['wind_speed'],
         'min_temp':
-        forecast_weather_data_day_n['temp']['min'],
+        '{0:.0f}'.format(forecast_weather_data_day_n['temp']['min']),
         'max_temp':
-        forecast_weather_data_day_n['temp']['max'],
+         '{0:.0f}'.format(forecast_weather_data_day_n['temp']['max']),
         'description':
         forecast_weather_data_day_n['weather'][0]['description'],
         'icon':
