@@ -1,3 +1,4 @@
+# Fovi est un génie en parlant de langage/domaines et de la gestion des erreurs/corrections
 # https://openweathermap.org/api/one-call-api#data
 # See how to exclude parts exclude={part}
 # See how to store these in secrets, and where it goes when deploying web app
