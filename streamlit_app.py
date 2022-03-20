@@ -1,3 +1,4 @@
+# Add branch to test daily temperatures feature, papier crayon 1st
 # Always minify code before moving on next feature/fix
 # Papier crayon pour cleanup code et minifier la duplication inutile de code répété
 # Formattage temperatures en entiers avec symbole degré
@@ -20,6 +21,7 @@ st.set_page_config(
 st.title('Weather App')
 
 options_sidebar = st.sidebar
+
 with options_sidebar:
     app_lang = st.selectbox('Display lang', ('en', 'fr', 'es'))
     st.markdown('---')
@@ -32,7 +34,6 @@ call_url = open_weather_api_call(*city_coordinates, lang=app_lang)
 r = requests.get(call_url)
 r_json = r.json()
 
-# st.write(r_json)
 
 current_weather_metrics = get_current_weather_metrics(r_json)
 current_weather_temp = current_weather_metrics['temp']
