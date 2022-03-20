@@ -84,6 +84,15 @@ def get_daily_weather_forecast_data_for_day_n(call_json, n):
         }
 
 
+def daily_weather_col_data(r_json, day_n):
+     forecast_weather_data = get_daily_weather_forecast_data_for_day_n(r_json, day_n)
+     st.subheader(get_day_of_week_from_ts(int(forecast_weather_data['dt'])))
+     st.image(get_weather_icon_url(forecast_weather_data['icon']))
+     st.caption(forecast_weather_data['description'])
+     st.metric('Max', forecast_weather_data['max_temp'])
+     st.metric('Min', forecast_weather_data['min_temp'])
+
+
 def get_weather_icon_url(icon_code):
     return BASE_ICON_URL + icon_code + '@2x.png'
 
