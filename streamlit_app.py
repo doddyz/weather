@@ -1,3 +1,4 @@
+# Always start but fully reading up documentation and available samples to see extent of what's available
 # Add branch to test daily temperatures feature, papier crayon 1st
 # Always minify code before moving on next feature/fix
 # Papier crayon pour cleanup code et minifier la duplication inutile de code répété
