@@ -36,11 +36,25 @@ r = requests.get(call_url)
 r_json = r.json()
 
 
+# st.write(get_hourly_weather_forecast_data(r_json))
+
+df = get_hourly_weather_forecast_data_as_df(r_json)
+
+# df
+
+# df.to_csv('export.csv')
+
+
 cols = st.columns(8)
 for i in range(0, 8):
     with cols[i]:
         daily_weather_col_data(r_json, i + 1)
 
+st.markdown('---')
+
+st.line_chart(df[['temp']])
+
+st.bar_chart(df[['pop']])
 
 
 

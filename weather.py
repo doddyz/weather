@@ -17,7 +17,7 @@ BASE_GEO_API_CALL_URL = 'http://api.openweathermap.org/geo/1.0/direct?'
 
 BASE_ICON_URL = 'http://openweathermap.org/img/wn/'
 
-COUNTRIES = {'GB': ['London', 'Manchester'], 'FR': ['Paris'], 'ES': ['Madrid']}
+COUNTRIES = {'GB': ['London', 'Manchester'], 'FR': ['Paris', 'Vincennes', 'Bordeaux'], 'TG': ['Lomé', 'Aneho'], 'ES': ['Madrid', 'Málaga', 'Granada', 'Córdoba']}
 
 # CITIES = {'London': {'lat': '51.5118529', 'lon': '-0.1987003'}}
 
@@ -31,8 +31,6 @@ def get_geo_coordinates(city_name, country_code):
 
 @st.cache
 def open_weather_api_call(lat, lon, lang='en', units='metric'):
-    # lat = CITIES[city]['lat']
-    # lon = CITIES[city]['lon']
     return BASE_API_CALL_URL + f'lat={lat}&lon={lon}&units={units}&lang={lang}&appid={OPENWEATHER_KEY}'
 
 
@@ -91,6 +89,21 @@ def daily_weather_col_data(r_json, day_n):
      st.caption(forecast_weather_data['description'])
      st.metric('Max', forecast_weather_data['max_temp'])
      st.metric('Min', forecast_weather_data['min_temp'])
+
+
+def get_hourly_weather_forecast_data(call_json):
+    # returns dict of hourly weather data
+    return call_json['hourly']
+
+# For now only interested in next 24 hours hourly data
+def get_hourly_weather_forecast_data_as_df(call_json):
+    # returns dict of hourly weather data
+    df = pd.DataFrame(call_json['hourly'])
+    # To make our hours start at 1 rather than 0
+    # Verify we're using right hours by converting the unix timestamp first
+    df.index += 1
+    return df[:24]
+
 
 
 def get_weather_icon_url(icon_code):
