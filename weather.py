@@ -105,7 +105,7 @@ def get_hourly_weather_forecast_data_as_df(call_json):
 
     df['Date'] = df['dt'].map(datetime.fromtimestamp)
 
-    # df['Date'] = df['Tmp'].map(lambda x: x.strftime('%A %H:%M'))
+    # df['Tmp2'] = df['Date'].map(lambda x: x.strftime('%A %H:%M'));
     
     # To make our hours start at 1 rather than 0
     # Verify we're using right hours by converting the unix timestamp first
@@ -116,10 +116,21 @@ def get_hourly_weather_forecast_data_as_df(call_json):
 
 
 def draw_hourly_temp_chart(df):
-     return alt.Chart(df).mark_line().encode(
-          x='Date:T',
-          y='temp:Q',
-     )
+
+     base = alt.Chart(df).encode(
+        x='Date',
+        y='temp',
+        tooltip='temp'
+        
+    )
+         
+     line = base.mark_line()
+
+     points = base.mark_point(filled=True, size=40)
+     chart = line + points
+
+     return chart
+
 
 def draw_hourly_precipitation_proba_chart(df):
      return alt.Chart(df).mark_bar().encode(
