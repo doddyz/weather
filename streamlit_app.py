@@ -1,11 +1,4 @@
-# Always start but fully reading up documentation and available samples to see extent of what's available
-# Add branch to test daily temperatures feature, papier crayon 1st
-# Always minify code before moving on next feature/fix
-# Papier crayon pour cleanup code et minifier la duplication inutile de code répété
-# Formattage temperatures en entiers avec symbole degré
-# Ajouter séléction de ville avec choix de ville par défaut parmis une liste prédéfinie (voir comment permettre séléction simple de villes)
-
-
+# Add temperature degree symbol to all shown temperatures
 import streamlit as st
 import requests
 from weather import *
@@ -52,9 +45,11 @@ for i in range(0, 8):
 
 st.markdown('---')
 
-st.line_chart(df[['temp']])
+st.altair_chart(draw_hourly_temp_chart(df), use_container_width=True)
 
-st.bar_chart(df[['pop']])
+st.altair_chart(draw_hourly_precipitation_proba_chart(df), use_container_width=True)
+
+# st.bar_chart(df[['pop']])
 
 
 

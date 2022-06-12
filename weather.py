@@ -1,9 +1,10 @@
-# Fovi est un génie en parlant de langage/domaines et de la gestion des erreurs/corrections
-# https://openweathermap.org/api/one-call-api#data
+# Altair Chart refinements: add tooltips, Format datetime as wanted, slant axis labels data, Finally maybe mix into a single combo chart all information, colouring each chart type differently
 # See how to exclude parts exclude={part}
 # See how to store these in secrets, and where it goes when deploying web app
+# https://openweathermap.org/api/one-call-api#data
 
 import json
+import altair as alt
 import pandas as pd
 import requests
 import streamlit as st
@@ -99,12 +100,34 @@ def get_hourly_weather_forecast_data(call_json):
 def get_hourly_weather_forecast_data_as_df(call_json):
     # returns dict of hourly weather data
     df = pd.DataFrame(call_json['hourly'])
+
+    # Add a column to transform dt unix timestamps as date time objects that we can then parse as we wish
+
+    df['Date'] = df['dt'].map(datetime.fromtimestamp)
+
+    # df['Date'] = df['Tmp'].map(lambda x: x.strftime('%A %H:%M'))
+    
     # To make our hours start at 1 rather than 0
     # Verify we're using right hours by converting the unix timestamp first
     df.index += 1
+
+    # df = df.set_index('Tmp2')
     return df[:24]
 
 
+def draw_hourly_temp_chart(df):
+     return alt.Chart(df).mark_line().encode(
+          x='Date:T',
+          y='temp:Q',
+     )
+
+def draw_hourly_precipitation_proba_chart(df):
+     return alt.Chart(df).mark_bar().encode(
+          x='Date:T',
+          y='pop:Q',
+     )
+
+     
 
 def get_weather_icon_url(icon_code):
     return BASE_ICON_URL + icon_code + '@2x.png'
